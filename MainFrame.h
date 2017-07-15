@@ -21,6 +21,7 @@
 #include <wx/button.h>
 #include <wx/textctrl.h>
 #include <wx/timer.h>
+#include <string>
 
 #include "Time.h"
 #include "Date.h"
@@ -55,9 +56,9 @@ protected:
 
     virtual void OnDateFormatButtonClicked(wxCommandEvent& event);
     virtual void OnTimeFormatButtonClicked(wxCommandEvent& event);
-    virtual void OnHourstextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnMinutestextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnSecondstextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnHourstextctrlTextUpdated(wxCommandEvent& event);
+    virtual void OnMinutestextctrlTextUpdated(wxCommandEvent& event);
+    virtual void OnSecondstextctrlTextUpdated(wxCommandEvent& event);
     virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event) { event.Skip(); }
     virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event) { event.Skip(); }
     virtual void OnDateTimeTimer(wxTimerEvent& event);

@@ -171,3 +171,20 @@ void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
 
     DateText->SetLabel(date->changeDateFormat());
 }
+
+/*
+void MainFrame::OnHourstextctrlTextUpdated(wxCommandEvent &event) {
+
+    long hours;
+    HoursTextCtrl->GetValue().ToLong(&hours);
+    if(hours >= 0 || hours <= 24 )
+
+}
+
+void MainFrame::OnMinutestextctrlTextUpdated(wxCommandEvent &event) {
+
+}
+
+void MainFrame::OnSecondstextctrlTextUpdated(wxCommandEvent &event) {
+
+}
