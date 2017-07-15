@@ -207,11 +207,14 @@ void MainFrame::OnSecondstextctrlTextUpdated(wxCommandEvent &event) {
     TimerText->SetLabel(timer->FormatISOTime());
 }
 
-void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event) {
+void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event){
 
     StartStopTimerButton->SetLabel(timer->startStop());
-    if(StartStopTimerButton->GetLabel() == "Stop")
+    if(StartStopTimerButton->GetLabel() == "Stop") {
         TimerTimer->Start(100, false);
+        TimerText->SetForegroundColour(wxColour(0, 0, 0));
+    }
+
     else
         TimerTimer->Stop();
 }
@@ -229,4 +232,6 @@ void MainFrame::OnTimerTimer(wxTimerEvent &event) {
         TimerText->SetLabel(timer->updateTime());
 
     TimerText->SetForegroundColour(wxColour(255, 0, 3));
+    StartStopTimerButton->SetLabel(timer->startStop());
+    TimerTimer->Stop();
 }
