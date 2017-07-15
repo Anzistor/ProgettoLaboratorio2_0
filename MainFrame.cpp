@@ -8,6 +8,9 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
         : wxFrame(parent, id, title, pos, size, style)
 {
 
+    time = new Time;
+    date = new Date;
+
     wxBoxSizer* MainboxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(MainboxSizer);
 

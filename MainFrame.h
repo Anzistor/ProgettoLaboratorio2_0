@@ -22,8 +22,14 @@
 #include <wx/textctrl.h>
 #include <wx/timer.h>
 
+#include "Time.h"
+#include "Date.h"
+
+
 class MainFrame : public wxFrame {
+
 protected:
+
     wxNotebook* Notebook;
     wxPanel* DateTimePanel;
     wxStaticText* DateText;
@@ -41,19 +47,24 @@ protected:
     wxButton* ResetTimerButton;
     wxTimer* DateTimeTimer;
     wxTimer* TimerTimer;
+    Time* time;
+    Date* date;
+
 
 protected:
-    virtual void OnDateFormatButtonClicked(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnTimeFormatButtonClicked(wxCommandEvent& event) { event.Skip(); }
+
+    virtual void OnDateFormatButtonClicked(wxCommandEvent& event);
+    virtual void OnTimeFormatButtonClicked(wxCommandEvent& event);
     virtual void OnHourstextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
     virtual void OnMinutestextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
     virtual void OnSecondstextctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
     virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event) { event.Skip(); }
     virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnDateTimeTimer(wxTimerEvent& event) { event.Skip(); }
+    virtual void OnDateTimeTimer(wxTimerEvent& event);
     virtual void OnTimerTimer(wxTimerEvent& event) { event.Skip(); }
 
 public:
+
     wxStaticText* GetDateText() { return DateText; }
     wxStaticText* GetTimeText() { return TimeText; }
     wxStaticLine* GetDateTimeLine() { return DateTimeLine; }
