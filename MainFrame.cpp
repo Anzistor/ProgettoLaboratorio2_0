@@ -10,6 +10,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 
     time = new Time;
     date = new Date;
+    timer = new Timer;
 
     wxBoxSizer* MainboxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(MainboxSizer);
@@ -29,7 +30,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
     wxBoxSizer* DateTimeBoxSizer = new wxBoxSizer(wxVERTICAL);
     DateTimePanel->SetSizer(DateTimeBoxSizer);
 
-    DateText = new wxStaticText(DateTimePanel, wxID_ANY, _("1 January 1970"), wxDefaultPosition, wxDLG_UNIT(DateTimePanel, wxSize(400,100)), wxALIGN_CENTRE);
+    DateText = new wxStaticText(DateTimePanel, wxID_ANY, _(date->changeDateFormat()), wxDefaultPosition, wxDLG_UNIT(DateTimePanel, wxSize(400,100)), wxALIGN_CENTRE);
     wxFont DateTextFont(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Ubuntu"));
     DateText->SetFont(DateTextFont);
 
@@ -172,19 +173,60 @@ void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
     DateText->SetLabel(date->changeDateFormat());
 }
 
-/*
+
 void MainFrame::OnHourstextctrlTextUpdated(wxCommandEvent &event) {
 
     long hours;
     HoursTextCtrl->GetValue().ToLong(&hours);
-    if(hours >= 0 || hours <= 24 )
-
+    if(hours >= 0 && hours <= 23)
+        timer->SetHour(hours);
+    else
+        timer->SetHour(0);
+    TimerText->SetLabel(timer->FormatISOTime());
 }
 
 void MainFrame::OnMinutestextctrlTextUpdated(wxCommandEvent &event) {
 
+    long minutes;
+    MinutesTextCtrl->GetValue().ToLong(&minutes);
+    if(minutes >= 0 && minutes <= 59 )
+        timer->SetMinute(minutes);
+    else
+        timer->SetMinute(0);
+    TimerText->SetLabel(timer->FormatISOTime());
 }
 
 void MainFrame::OnSecondstextctrlTextUpdated(wxCommandEvent &event) {
 
+    long seconds;
+    SecondsTextCtrl->GetValue().ToLong(&seconds);
+    if(seconds >= 0 && seconds <= 59)
+        timer->SetSecond(seconds);
+    else
+        timer->SetSecond(0);
+    TimerText->SetLabel(timer->FormatISOTime());
+}
+
+void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event) {
+
+    StartStopTimerButton->SetLabel(timer->startStop());
+    if(StartStopTimerButton->GetLabel() == "Stop")
+        TimerTimer->Start(100, false);
+    else
+        TimerTimer->Stop();
+}
+
+void MainFrame::OnResettimerbuttonButtonClicked(wxCommandEvent &event) {
+
+    TimerText->SetLabel(timer->reset());
+    if(TimerText->GetLabel() == "Stop")
+        TimerText->SetLabel(timer->startStop());
+}
+
+void MainFrame::OnTimerTimer(wxTimerEvent &event) {
+
+    while(timer->GetHour() != 0 || timer->GetMinute() != 0 && timer->GetSecond() != 0)
+        TimerText->SetLabel(timer->updateTime());
+
+    TimerText->SetForegroundColour(wxColour(255, 0, 3));
 }

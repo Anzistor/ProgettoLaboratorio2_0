@@ -25,6 +25,7 @@
 
 #include "Time.h"
 #include "Date.h"
+#include "Timer.h"
 
 
 class MainFrame : public wxFrame {
@@ -50,6 +51,7 @@ protected:
     wxTimer* TimerTimer;
     Time* time;
     Date* date;
+    Timer* timer;
 
 
 protected:
@@ -59,10 +61,10 @@ protected:
     virtual void OnHourstextctrlTextUpdated(wxCommandEvent& event);
     virtual void OnMinutestextctrlTextUpdated(wxCommandEvent& event);
     virtual void OnSecondstextctrlTextUpdated(wxCommandEvent& event);
-    virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event);
+    virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event);
     virtual void OnDateTimeTimer(wxTimerEvent& event);
-    virtual void OnTimerTimer(wxTimerEvent& event) { event.Skip(); }
+    virtual void OnTimerTimer(wxTimerEvent& event);
 
 public:
 

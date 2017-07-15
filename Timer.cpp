@@ -18,7 +18,8 @@ wxString Timer::reset() {
     return FormatISOTime();
 }
 
-void Timer::updateTime() {
+wxString Timer::updateTime() {
 
     Subtract(wxTimeSpan(0,0,1));
+    return this->FormatISOTime();
 }

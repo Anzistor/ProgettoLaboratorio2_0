@@ -23,7 +23,7 @@ public:
 
     wxString startStop();
     wxString reset();
-    void updateTime();
+    wxString updateTime();
 
 private:
     int timerCount;
