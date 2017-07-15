@@ -5,7 +5,7 @@
 #ifndef PROGETTOLABORATORIO2_0_DATE_H
 #define PROGETTOLABORATORIO2_0_DATE_H
 
-#include <wx/wx.h
+#include <wx/wx.h>
 
 class Date : public wxDateTime {
 

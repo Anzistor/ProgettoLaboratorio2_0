@@ -155,3 +155,19 @@ MainFrame::~MainFrame()
     wxDELETE( TimerTimer );
 
 }
+
+void MainFrame::OnDateTimeTimer(wxTimerEvent& event) {
+
+    TimeText->SetLabel(time->updateTime());
+}
+
+void MainFrame::OnTimeFormatButtonClicked(wxCommandEvent& event) {
+
+    time->updateTimeCount();
+    time->changeTimeFormat();
+}
+
+void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
+
+    DateText->SetLabel(date->changeDateFormat());
+}
