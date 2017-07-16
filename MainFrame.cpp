@@ -236,21 +236,26 @@ void MainFrame::OnTimerTimer(wxTimerEvent &event) {
 
 void MainFrame::OnHourspinctrlTextUpdated(wxCommandEvent &event) {
 
-    timer->SetHour(HourSpinCtrl->GetValue());
-    TimerText->SetLabel(timer->FormatISOTime());
+    if(!TimerTimer->IsRunning()) {
+        timer->SetHour(HourSpinCtrl->GetValue());
+        TimerText->SetLabel(timer->FormatISOTime());
+    }
 
 }
 
 
 void MainFrame::OnMinutespinctrlTextUpdated(wxCommandEvent &event) {
-
-    timer->SetMinute(MinuteSpinCtrl->GetValue());
-    TimerText->SetLabel(timer->FormatISOTime());
+    if(!TimerTimer->IsRunning()) {
+        timer->SetMinute(MinuteSpinCtrl->GetValue());
+        TimerText->SetLabel(timer->FormatISOTime());
+    }
 }
 
 
 void MainFrame::OnSecondspinctrlTextUpdated(wxCommandEvent &event) {
 
-    timer->SetSecond(SecondSpinCtrl->GetValue());
-    TimerText->SetLabel(timer->FormatISOTime());
+    if (!TimerTimer->IsRunning()) {
+        timer->SetSecond(SecondSpinCtrl->GetValue());
+        TimerText->SetLabel(timer->FormatISOTime());
+    }
 }
