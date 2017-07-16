@@ -127,6 +127,8 @@ MainFrame::MainFrame(wxWindow *parent, wxWindowID id, const wxString &title, con
 
     TimerTimer = new wxTimer;
 
+    message = new wxMessageDialog(NULL, "DRIN DRIN", wxT("Timer"), wxOK | wxICON_EXCLAMATION);
+
 
     SetName(wxT("MainFrame"));
     SetSize(500, 500);
@@ -229,6 +231,7 @@ void MainFrame::OnTimerTimer(wxTimerEvent &event) {
         TimerText->SetLabel(timer->updateTime());
     else {
         TimerText->SetForegroundColour(wxColour(255, 0, 3));
+        message->ShowModal();
         StartStopTimerButton->SetLabel(timer->startStop());
         TimerTimer->Stop();
     }

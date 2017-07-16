@@ -22,6 +22,7 @@
 #include <wx/textctrl.h>
 #include <wx/timer.h>
 #include <wx/spinctrl.h>
+#include <wx/wx.h>
 
 #include "Time.h"
 #include "Date.h"
@@ -49,6 +50,7 @@ protected:
     wxButton* ResetTimerButton;
     wxTimer* DateTimeTimer;
     wxTimer* TimerTimer;
+    wxMessageDialog* message;
     Time* time;
     Date* date;
     Timer* timer;
