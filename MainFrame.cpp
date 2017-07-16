@@ -126,7 +126,6 @@ MainFrame::MainFrame(wxWindow *parent, wxWindowID id, const wxString &title, con
     DateTimeTimer->Start(100, false);
 
     TimerTimer = new wxTimer;
-    TimerTimer->Start(100, false);
 
 
     SetName(wxT("MainFrame"));
@@ -206,10 +205,11 @@ void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
 void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event) {
 
     StartStopTimerButton->SetLabel(timer->startStop());
-    if (StartStopTimerButton->GetLabel() == "Stop") {
+    if (StartStopTimerButton->GetLabel().IsSameAs(wxString("Stop"))) {
         TimerTimer->Start(100, false);
         TimerText->SetForegroundColour(wxColour(0, 0, 0));
-    } else
+    }
+    else
         TimerTimer->Stop();
 }
 
@@ -225,10 +225,11 @@ void MainFrame::OnTimerTimer(wxTimerEvent &event) {
 
     if (!timer->IsSameTime(wxDateTime(0, 0, 0)))
         TimerText->SetLabel(timer->updateTime());
-    else
+    else {
         TimerText->SetForegroundColour(wxColour(255, 0, 3));
-    StartStopTimerButton->SetLabel(timer->startStop());
-    TimerTimer->Stop();
+        StartStopTimerButton->SetLabel(timer->startStop());
+        TimerTimer->Stop();
+    }
 
 }
 
