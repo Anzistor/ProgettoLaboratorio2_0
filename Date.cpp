@@ -6,10 +6,14 @@
 
 wxString Date::changeDateFormat() {
 
-    switch (dateCount%2){
+    switch (dateCount % 4){
 
         case 1:
             return currentDate.FormatISODate();
+        case 2:
+            return currentDate.Format("%g %B %G");
+        case 3:
+            return currentDate.Format("%a %g %h %G");
         default:
             return currentDate.FormatDate();
     }

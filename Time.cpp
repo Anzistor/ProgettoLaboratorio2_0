@@ -6,15 +6,10 @@
 
 wxString Time::changeTimeFormat() {
 
-    switch (timeCount%2){
-
-        case 1:
-            return currentTime.Format("%r");
-
-        default:
-            return currentTime.FormatTime();
-    }
-
+    if(timeCount%2)
+        return currentTime.Format("%r");
+    else
+        return currentTime.FormatTime();
 }
 
 wxString Time::updateTime() {
