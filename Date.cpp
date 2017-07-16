@@ -6,7 +6,6 @@
 
 wxString Date::changeDateFormat() {
 
-    dateCount++;
     switch (dateCount%2){
 
         case 1:
@@ -14,4 +13,15 @@ wxString Date::changeDateFormat() {
         default:
             return currentDate.FormatDate();
     }
+}
+
+wxString Date::updateDate() {
+
+    currentDate=Today();
+    return changeDateFormat();
+}
+
+void Date::updateDateCount(){
+
+    dateCount++;
 }

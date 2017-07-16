@@ -16,6 +16,9 @@ public:
     }
 
     wxString changeDateFormat();
+    wxString updateDate();
+
+    void updateDateCount();
 
 private:
     int dateCount;

@@ -32,7 +32,7 @@ MainFrame::MainFrame(wxWindow *parent, wxWindowID id, const wxString &title, con
     wxBoxSizer *DateTimeBoxSizer = new wxBoxSizer(wxVERTICAL);
     DateTimePanel->SetSizer(DateTimeBoxSizer);
 
-    DateText = new wxStaticText(DateTimePanel, wxID_ANY, _(date->changeDateFormat()), wxDefaultPosition,
+    DateText = new wxStaticText(DateTimePanel, wxID_ANY, _("1 January 1970"), wxDefaultPosition,
                                 wxDLG_UNIT(DateTimePanel, wxSize(400, 100)), wxALIGN_CENTRE);
     wxFont DateTextFont(36, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Ubuntu"));
     DateText->SetFont(DateTextFont);
@@ -188,16 +188,18 @@ MainFrame::~MainFrame() {
 void MainFrame::OnDateTimeTimer(wxTimerEvent &event) {
 
     TimeText->SetLabel(time->updateTime());
+    DateText->SetLabel(date->updateDate());
 }
 
 void MainFrame::OnTimeFormatButtonClicked(wxCommandEvent &event) {
 
     time->updateTimeCount();
-    time->changeTimeFormat();
+    TimeText->SetLabel(time->changeTimeFormat());
 }
 
 void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
 
+    date->updateDateCount();
     DateText->SetLabel(date->changeDateFormat());
 }
 
@@ -245,6 +247,7 @@ void MainFrame::OnHourspinctrlTextUpdated(wxCommandEvent &event) {
 
 
 void MainFrame::OnMinutespinctrlTextUpdated(wxCommandEvent &event) {
+
     if(!TimerTimer->IsRunning()) {
         timer->SetMinute(MinuteSpinCtrl->GetValue());
         TimerText->SetLabel(timer->FormatISOTime());
