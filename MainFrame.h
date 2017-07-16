@@ -21,7 +21,7 @@
 #include <wx/button.h>
 #include <wx/textctrl.h>
 #include <wx/timer.h>
-#include <string>
+#include <wx/spinctrl.h>
 
 #include "Time.h"
 #include "Date.h"
@@ -42,9 +42,9 @@ protected:
     wxPanel* TimerPanel;
     wxStaticText* TimerText;
     wxStaticLine* TimerBoxLine;
-    wxTextCtrl* HoursTextCtrl;
-    wxTextCtrl* MinutesTextCtrl;
-    wxTextCtrl* SecondsTextCtrl;
+    wxSpinCtrl* HourSpinCtrl;
+    wxSpinCtrl* MinuteSpinCtrl;
+    wxSpinCtrl* SecondSpinCtrl;
     wxButton* StartStopTimerButton;
     wxButton* ResetTimerButton;
     wxTimer* DateTimeTimer;
@@ -53,18 +53,21 @@ protected:
     Date* date;
     Timer* timer;
 
-
 protected:
 
     virtual void OnDateFormatButtonClicked(wxCommandEvent& event);
     virtual void OnTimeFormatButtonClicked(wxCommandEvent& event);
-    virtual void OnHourstextctrlTextUpdated(wxCommandEvent& event);
-    virtual void OnMinutestextctrlTextUpdated(wxCommandEvent& event);
-    virtual void OnSecondstextctrlTextUpdated(wxCommandEvent& event);
+    virtual void OnHourspinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
+    virtual void OnHourspinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnMinutespinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
+    virtual void OnMinutespinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnSecondspinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
+    virtual void OnSecondspinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
     virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event);
     virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event);
     virtual void OnDateTimeTimer(wxTimerEvent& event);
     virtual void OnTimerTimer(wxTimerEvent& event);
+
 
 public:
 
@@ -76,9 +79,9 @@ public:
     wxPanel* GetDateTimePanel() { return DateTimePanel; }
     wxStaticText* GetTimerText() { return TimerText; }
     wxStaticLine* GetTimerBoxLine() { return TimerBoxLine; }
-    wxTextCtrl* GetHoursTextCtrl() { return HoursTextCtrl; }
-    wxTextCtrl* GetMinutesTextCtrl() { return MinutesTextCtrl; }
-    wxTextCtrl* GetSecondsTextCtrl() { return SecondsTextCtrl; }
+    wxSpinCtrl* GetHourSpinCtrl() { return HourSpinCtrl; }
+    wxSpinCtrl* GetMinuteSpinCtrl() { return MinuteSpinCtrl; }
+    wxSpinCtrl* GetSecondSpinCtrl() { return SecondSpinCtrl; }
     wxButton* GetStartStopTimerButton() { return StartStopTimerButton; }
     wxButton* GetResetTimerButton() { return ResetTimerButton; }
     wxPanel* GetTimerPanel() { return TimerPanel; }

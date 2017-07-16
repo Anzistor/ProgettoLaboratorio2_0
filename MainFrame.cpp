@@ -12,6 +12,7 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
     date = new Date;
     timer = new Timer;
 
+
     wxBoxSizer* MainboxSizer = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(MainboxSizer);
 
@@ -70,30 +71,27 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 
     TimerSizer->Add(TimerBoxLine, 0, wxALL|wxEXPAND, 5);
 
-    wxBoxSizer* TextCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* SpinCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    TimerSizer->Add(TextCtrlSizer, 1, wxALL|wxEXPAND, 5);
+    TimerSizer->Add(SpinCtrlSizer, 1, wxALL|wxEXPAND, 5);
 
-    HoursTextCtrl = new wxTextCtrl(TimerPanel, wxID_ANY, wxT(""), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), 0);
-#if wxVERSION_NUMBER >= 3000
-    HoursTextCtrl->SetHint(_("Hours"));
-#endif
+    HourSpinCtrl = new wxSpinCtrl(TimerPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), wxSP_ARROW_KEYS);
+    HourSpinCtrl->SetRange(0, 23);
+    HourSpinCtrl->SetValue(0);
 
-    TextCtrlSizer->Add(HoursTextCtrl, 0, wxLEFT|wxRIGHT|wxTOP|wxALIGN_CENTER_HORIZONTAL|wxALIGN_TOP, 30);
+    SpinCtrlSizer->Add(HourSpinCtrl, 0, wxLEFT|wxRIGHT|wxTOP|wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL, 15);
 
-    MinutesTextCtrl = new wxTextCtrl(TimerPanel, wxID_ANY, wxT(""), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), 0);
-#if wxVERSION_NUMBER >= 3000
-    MinutesTextCtrl->SetHint(_("Minutes"));
-#endif
+    MinuteSpinCtrl = new wxSpinCtrl(TimerPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), wxSP_ARROW_KEYS);
+    MinuteSpinCtrl->SetRange(0, 59);
+    MinuteSpinCtrl->SetValue(0);
 
-    TextCtrlSizer->Add(MinutesTextCtrl, 0, wxLEFT|wxRIGHT|wxTOP, 30);
+    SpinCtrlSizer->Add(MinuteSpinCtrl, 0, wxLEFT|wxRIGHT|wxTOP|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 15);
 
-    SecondsTextCtrl = new wxTextCtrl(TimerPanel, wxID_ANY, wxT(""), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), 0);
-#if wxVERSION_NUMBER >= 3000
-    SecondsTextCtrl->SetHint(_("Seconds"));
-#endif
+    SecondSpinCtrl = new wxSpinCtrl(TimerPanel, wxID_ANY, wxT("0"), wxDefaultPosition, wxDLG_UNIT(TimerPanel, wxSize(-1,-1)), wxSP_ARROW_KEYS);
+    SecondSpinCtrl->SetRange(0, 59);
+    SecondSpinCtrl->SetValue(0);
 
-    TextCtrlSizer->Add(SecondsTextCtrl, 0, wxLEFT|wxRIGHT|wxTOP|wxALIGN_RIGHT, 30);
+    SpinCtrlSizer->Add(SecondSpinCtrl, 0, wxLEFT|wxRIGHT|wxTOP|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 15);
 
     wxBoxSizer* ButtonsBoxSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -127,9 +125,12 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
     // Connect events
     DateFormatButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnDateFormatButtonClicked), NULL, this);
     TimeFormatButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnTimeFormatButtonClicked), NULL, this);
-    HoursTextCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnHourstextctrlTextUpdated), NULL, this);
-    MinutesTextCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnMinutestextctrlTextUpdated), NULL, this);
-    SecondsTextCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnSecondstextctrlTextUpdated), NULL, this);
+    HourSpinCtrl->Connect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnHourspinctrlSpinctrl), NULL, this);
+    HourSpinCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnHourspinctrlTextUpdated), NULL, this);
+    MinuteSpinCtrl->Connect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnMinutespinctrlSpinctrl), NULL, this);
+    MinuteSpinCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnMinutespinctrlTextUpdated), NULL, this);
+    SecondSpinCtrl->Connect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnSecondspinctrlSpinctrl), NULL, this);
+    SecondSpinCtrl->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnSecondspinctrlTextUpdated), NULL, this);
     StartStopTimerButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnStartStopTimerButtonClicked), NULL, this);
     ResetTimerButton->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnResettimerbuttonButtonClicked), NULL, this);
     DateTimeTimer->Connect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnDateTimeTimer), NULL, this);
@@ -141,9 +142,12 @@ MainFrame::~MainFrame()
 {
     DateFormatButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnDateFormatButtonClicked), NULL, this);
     TimeFormatButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnTimeFormatButtonClicked), NULL, this);
-    HoursTextCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnHourstextctrlTextUpdated), NULL, this);
-    MinutesTextCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnMinutestextctrlTextUpdated), NULL, this);
-    SecondsTextCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnSecondstextctrlTextUpdated), NULL, this);
+    HourSpinCtrl->Disconnect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnHourspinctrlSpinctrl), NULL, this);
+    HourSpinCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnHourspinctrlTextUpdated), NULL, this);
+    MinuteSpinCtrl->Disconnect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnMinutespinctrlSpinctrl), NULL, this);
+    MinuteSpinCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnMinutespinctrlTextUpdated), NULL, this);
+    SecondSpinCtrl->Disconnect(wxEVT_SPINCTRL, wxSpinEventHandler(MainFrame::OnSecondspinctrlSpinctrl), NULL, this);
+    SecondSpinCtrl->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(MainFrame::OnSecondspinctrlTextUpdated), NULL, this);
     StartStopTimerButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnStartStopTimerButtonClicked), NULL, this);
     ResetTimerButton->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrame::OnResettimerbuttonButtonClicked), NULL, this);
     DateTimeTimer->Disconnect(wxEVT_TIMER, wxTimerEventHandler(MainFrame::OnDateTimeTimer), NULL, this);
@@ -174,39 +178,6 @@ void MainFrame::OnDateFormatButtonClicked(wxCommandEvent &event) {
 }
 
 
-void MainFrame::OnHourstextctrlTextUpdated(wxCommandEvent &event) {
-
-    long hours;
-    HoursTextCtrl->GetValue().ToLong(&hours);
-    if(hours >= 0 && hours <= 23)
-        timer->SetHour(hours);
-    else
-        timer->SetHour(0);
-    TimerText->SetLabel(timer->FormatISOTime());
-}
-
-void MainFrame::OnMinutestextctrlTextUpdated(wxCommandEvent &event) {
-
-    long minutes;
-    MinutesTextCtrl->GetValue().ToLong(&minutes);
-    if(minutes >= 0 && minutes <= 59 )
-        timer->SetMinute(minutes);
-    else
-        timer->SetMinute(0);
-    TimerText->SetLabel(timer->FormatISOTime());
-}
-
-void MainFrame::OnSecondstextctrlTextUpdated(wxCommandEvent &event) {
-
-    long seconds;
-    SecondsTextCtrl->GetValue().ToLong(&seconds);
-    if(seconds >= 0 && seconds <= 59)
-        timer->SetSecond(seconds);
-    else
-        timer->SetSecond(0);
-    TimerText->SetLabel(timer->FormatISOTime());
-}
-
 void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event){
 
     StartStopTimerButton->SetLabel(timer->startStop());
@@ -222,6 +193,7 @@ void MainFrame::OnStartStopTimerButtonClicked(wxCommandEvent &event){
 void MainFrame::OnResettimerbuttonButtonClicked(wxCommandEvent &event) {
 
     TimerText->SetLabel(timer->reset());
+    TimerText->SetForegroundColour(wxColour(0, 0, 0));
     if(TimerText->GetLabel() == "Stop")
         TimerText->SetLabel(timer->startStop());
 }
