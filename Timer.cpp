@@ -20,6 +20,6 @@ wxString Timer::reset() {
 
 wxString Timer::updateTime() {
 
-    Subtract(wxTimeSpan(0,0,1));
+    Subtract(wxTimeSpan(0, 0, 0, 100));
     return this->FormatISOTime();
 }

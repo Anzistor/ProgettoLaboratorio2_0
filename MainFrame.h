@@ -57,12 +57,9 @@ protected:
 
     virtual void OnDateFormatButtonClicked(wxCommandEvent& event);
     virtual void OnTimeFormatButtonClicked(wxCommandEvent& event);
-    virtual void OnHourspinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
-    virtual void OnHourspinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnMinutespinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
-    virtual void OnMinutespinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
-    virtual void OnSecondspinctrlSpinctrl(wxSpinEvent& event) { event.Skip(); }
-    virtual void OnSecondspinctrlTextUpdated(wxCommandEvent& event) { event.Skip(); }
+    virtual void OnHourspinctrlTextUpdated(wxCommandEvent& event);
+    virtual void OnMinutespinctrlTextUpdated(wxCommandEvent& event);
+    virtual void OnSecondspinctrlTextUpdated(wxCommandEvent& event);
     virtual void OnStartStopTimerButtonClicked(wxCommandEvent& event);
     virtual void OnResettimerbuttonButtonClicked(wxCommandEvent& event);
     virtual void OnDateTimeTimer(wxTimerEvent& event);
